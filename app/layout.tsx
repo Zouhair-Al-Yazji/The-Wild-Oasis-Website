@@ -13,7 +13,8 @@ export const metadata: Metadata = {
     template: "%s / The Wild Oasis",
     default: "Welcome / The Wild Oasis",
   },
-  description: "Luxury cabin hotel management app",
+  description:
+    "Discover our collection of luxury cabins nestled in the heart of the Italian Dolomites. Perfect for peaceful getaways with stunning mountain views.",
 };
 
 export default function RootLayout({

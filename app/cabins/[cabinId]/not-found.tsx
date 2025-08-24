@@ -1,17 +1,19 @@
 import Link from "next/link";
 
-export default function NotFound() {
+function NotFound() {
   return (
     <main className="mt-4 space-y-6 text-center">
       <h1 className="text-3xl font-semibold">
-        This page could not be found :(
+        This cabin could not be found :(
       </h1>
       <Link
-        href="/"
+        href="/cabins"
         className="bg-accent-500 text-primary-800 hover:bg-accent-600 inline-block px-6 py-3 text-lg transition-colors"
       >
-        Go back home
+        Back to all cabins
       </Link>
     </main>
   );
 }
+
+export default NotFound;
