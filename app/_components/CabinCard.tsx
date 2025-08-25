@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { UsersIcon, MapPinIcon } from "@heroicons/react/24/solid";
 import { ArrowRight } from "lucide-react";
-import type { Cabin } from "@/app/_lib/data-service";
+import type { Cabin } from "@/lib/data-service";
+import LinkButton from "./LinkButton";
 
 export default function CabinCard({ cabin }: { cabin: Cabin }) {
   const { id, name, maxCapacity, regularPrice, discount, image } = cabin;
@@ -81,20 +82,17 @@ export default function CabinCard({ cabin }: { cabin: Cabin }) {
         </div>
 
         <div className="pt-2">
-          <Link
+          <LinkButton
             href={`/cabins/${id}`}
-            className="group/btn from-accent-600 via-accent-500 to-accent-600 hover:from-accent-500 hover:via-accent-400 hover:to-accent-500 text-primary-900 hover:shadow-accent-500/25 relative block w-full transform overflow-hidden rounded-xs bg-gradient-to-r px-4 py-3 text-center font-bold transition-all duration-300 hover:shadow-lg active:scale-95"
-          >
-            <span className="relative z-10 flex items-center justify-center gap-2">
-              <span className="text-sm sm:text-base">
-                View Details & Reserve
-              </span>
+            variant="gradient-with-hover-effect"
+            size="md"
+            icon={
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-1 sm:h-5 sm:w-5" />
-            </span>
-
-            {/* Button shine effect */}
-            <div className="absolute inset-0 -left-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-all duration-1000 group-hover/btn:left-full"></div>
-          </Link>
+            }
+            fullWidth
+          >
+            View Details & Reserve
+          </LinkButton>
         </div>
       </div>
 

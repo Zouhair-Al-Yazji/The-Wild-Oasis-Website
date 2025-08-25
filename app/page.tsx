@@ -1,7 +1,7 @@
 import Image from "next/image";
 import bg from "@/public/bg.png";
-import Link from "next/link";
 import { TextEffect } from "@/components/motion-primitives/text-effect";
+import LinkButton from "@/app/_components/LinkButton";
 
 export default function Page() {
   return (
@@ -29,12 +29,13 @@ export default function Page() {
           Welcome to paradise.
         </TextEffect>
 
-        <Link
+        <LinkButton
           href="/cabins"
-          className="bg-accent-500 hover:bg-accent-600 active:bg-accent-700 text-primary-900 hover:shadow-accent-500/25 inline-block transform rounded-xs px-5 py-3 text-sm font-semibold transition-all hover:shadow-lg active:scale-95 sm:px-6 sm:py-3 sm:text-base md:px-8 md:py-4 md:text-lg lg:px-10 lg:py-6"
+          variant="gradient-with-hover-effect"
+          size="xl"
         >
           Explore luxury cabins
-        </Link>
+        </LinkButton>
       </div>
     </div>
   );
