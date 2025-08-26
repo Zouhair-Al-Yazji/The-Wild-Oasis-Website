@@ -1,7 +1,7 @@
 import Image from "next/image";
 import bg from "@/public/bg.png";
 import { TextEffect } from "@/components/motion-primitives/text-effect";
-import LinkButton from "@/app/_components/LinkButton";
+import LinkButton from "@/components/LinkButton";
 
 export default function Page() {
   return (

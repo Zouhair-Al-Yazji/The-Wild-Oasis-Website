@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import Spinner from "@/app/_components/Spinner";
-import CabinsList from "@/app/_components/CabinsList";
+import Spinner from "@/components/Spinner";
+import CabinsList from "@/components/CabinsList";
 
 export const revalidate = 3600;
 

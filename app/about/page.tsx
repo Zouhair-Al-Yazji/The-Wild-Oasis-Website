@@ -1,8 +1,8 @@
 import { getCabins } from "@/lib/data-service";
 import { Metadata } from "next";
-import AboutHeroSection from "@/app/_components/AboutHeroSection";
-import AboutStatsSection from "@/app/_components/AboutStatsSection";
-import AboutContentSection from "@/app/_components/AboutContentSection";
+import AboutHeroSection from "@/components/AboutHeroSection";
+import AboutStatsSection from "@/components/AboutStatsSection";
+import AboutContentSection from "@/components/AboutContentSection";
 
 export const revalidate = 86400;
 

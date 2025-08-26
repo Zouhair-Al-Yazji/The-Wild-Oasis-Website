@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import about1 from "@/public/about-1.jpg";
 import about2 from "@/public/about-2.jpg";
 import {
@@ -63,13 +62,13 @@ export default function AboutContentSection({
           </div>
 
           <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="bg-primary-800/30 flex items-center gap-3 rounded-sm p-4">
+            <div className="bg-primary-800/30 flex items-center gap-3 rounded-xs p-4">
               <MapPinIcon className="text-accent-400 h-5 w-5" />
               <span className="text-primary-200 text-sm font-medium">
                 Italian Dolomites
               </span>
             </div>
-            <div className="bg-primary-800/30 flex items-center gap-3 rounded-sm p-4">
+            <div className="bg-primary-800/30 flex items-center gap-3 rounded-xs p-4">
               <SparklesIcon className="text-accent-400 h-5 w-5" />
               <span className="text-primary-200 text-sm font-medium">
                 Luxury Experience
@@ -80,8 +79,8 @@ export default function AboutContentSection({
 
         <div className="order-1 lg:order-2">
           <div className="relative">
-            <div className="from-accent-500/20 to-accent-600/20 absolute -inset-4 rounded-2xl bg-gradient-to-r blur-lg"></div>
-            <div className="relative overflow-hidden rounded-sm shadow-xs">
+            <div className="from-accent-500/20 to-accent-600/20 absolute -inset-4 rounded-xs bg-gradient-to-r blur-lg"></div>
+            <div className="relative overflow-hidden rounded-xs shadow-xs">
               <Image
                 src={about1}
                 placeholder="blur"
@@ -97,8 +96,8 @@ export default function AboutContentSection({
       <div className="mt-24 grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
         <div className="order-1">
           <div className="relative">
-            <div className="from-accent-600/20 to-accent-500/20 absolute -inset-4 rounded-2xl bg-gradient-to-r blur-lg"></div>
-            <div className="relative overflow-hidden rounded-sm shadow-xs">
+            <div className="from-accent-600/20 to-accent-500/20 absolute -inset-4 rounded-xs bg-gradient-to-r blur-lg"></div>
+            <div className="relative overflow-hidden rounded-xs shadow-xs">
               <Image
                 src={about2}
                 placeholder="blur"
@@ -142,7 +141,7 @@ export default function AboutContentSection({
             </p>
           </div>
 
-          <div className="bg-primary-800/30 mt-8 flex items-center gap-3 rounded-sm p-4">
+          <div className="bg-primary-800/30 mt-8 flex items-center gap-3 rounded-xs p-4">
             <CalendarIcon className="text-accent-400 h-5 w-5" />
             <span className="text-primary-200 text-sm font-medium">
               3 Generations of Hospitality Excellence

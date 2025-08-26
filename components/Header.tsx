@@ -1,6 +1,6 @@
-import Logo from "@/app/_components/Logo";
-import MobileNavigation from "@/app/_components/MobileNavigation";
-import Navigation from "@/app/_components/Navigation";
+import Logo from "@/components/Logo";
+import MobileNavigation from "@/components/MobileNavigation";
+import Navigation from "@/components/Navigation";
 
 export default function Header() {
   return (

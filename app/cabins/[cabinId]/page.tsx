@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { getCabin, getCabins } from "@/lib/data-service";
-import CabinHeader from "@/app/_components/CabinHeader";
-import CabinHeroSection from "@/app/_components/CabinHeroSection";
-import CabinDescription from "@/app/_components/CabinDescription";
-import CabinAmenitiesSection from "@/app/_components/CabinAmenitiesSection";
-import CallToActionSection from "@/app/_components/CallToActionSection";
+import CabinHeader from "@/components/CabinHeader";
+import CabinHeroSection from "@/components/CabinHeroSection";
+import CabinDescription from "@/components/CabinDescription";
+import CabinAmenitiesSection from "@/components/CabinAmenitiesSection";
+import CallToActionSection from "@/components/CallToActionSection";
 
 type Props = {
   params: Promise<{ cabinId: string }>;

@@ -1,6 +1,6 @@
 import Image from "next/image";
-import CabinInfo from "@/app/_components/CabinInfo";
-import PricingCard from "@/app/_components/PricingCard";
+import CabinInfo from "@/components/CabinInfo";
+import PricingCard from "@/components/PricingCard";
 
 type CabinHeroSectionProps = {
   name: string;
