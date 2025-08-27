@@ -12,7 +12,7 @@ export default function CabinCard({ cabin }: { cabin: Cabin }) {
     discount > 0 ? Math.round((discount / regularPrice) * 100) : 0;
 
   return (
-    <div className="group border-primary-800/50 from-primary-950 via-primary-900 to-primary-950 hover:border-accent-500/30 hover:shadow-accent-500/10 relative overflow-hidden border bg-gradient-to-br shadow-lg transition-all duration-300 hover:shadow-2xl">
+    <div className="group border-primary-800/50 from-primary-950 via-primary-900 to-primary-950 hover:border-accent-500/30 hover:shadow-accent-500/10 relative overflow-hidden rounded-xs border bg-gradient-to-br shadow-lg transition-all duration-300 hover:shadow-2xl">
       <div className="relative aspect-[4/3] overflow-hidden sm:aspect-[16/10]">
         <Image
           src={image}
@@ -86,6 +86,7 @@ export default function CabinCard({ cabin }: { cabin: Cabin }) {
             href={`/cabins/${id}`}
             variant="gradient-with-hover-effect"
             size="md"
+            iconDirection="right"
             icon={
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-1 sm:h-5 sm:w-5" />
             }

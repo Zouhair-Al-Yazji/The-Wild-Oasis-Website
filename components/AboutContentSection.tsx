@@ -153,6 +153,7 @@ export default function AboutContentSection({
               href="/cabins"
               variant="gradient-with-icon"
               size="lg"
+              iconDirection="right"
               icon={
                 <ArrowRightIcon className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               }

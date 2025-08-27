@@ -75,9 +75,9 @@ export default function CabinAmenitiesSection({
   ];
 
   return (
-    <div className="from-primary-900/60 to-primary-800/40 border-primary-700/30 rounded-sm border bg-gradient-to-br p-6 sm:p-8">
+    <div className="from-primary-900/60 to-primary-800/40 border-primary-700/30 rounded-xs border bg-gradient-to-br p-6 sm:p-8">
       <div className="mb-8 flex items-center gap-3">
-        <div className="bg-accent-500/20 rounded-sm p-3">
+        <div className="bg-accent-500/20 rounded-xs p-3">
           <SparklesIcon className="text-accent-400 h-6 w-6" />
         </div>
         <h2 className="text-accent-400 text-2xl font-bold sm:text-3xl">
@@ -89,10 +89,10 @@ export default function CabinAmenitiesSection({
         {amenities.map((feature, index) => (
           <div
             key={index}
-            className="group from-primary-950/80 to-primary-900/60 border-primary-700/30 hover:border-accent-400/50 hover:shadow-accent-500/10 rounded-sm border bg-gradient-to-br p-5 transition-all duration-300 hover:scale-105 hover:transform hover:shadow-xl"
+            className="group from-primary-950/80 to-primary-900/60 border-primary-700/30 hover:border-accent-400/50 hover:shadow-accent-500/10 rounded-xs border bg-gradient-to-br p-5 transition-all duration-300 hover:scale-105 hover:transform hover:shadow-xl"
           >
             <div className="flex flex-col items-center space-y-3 text-center">
-              <div className="from-accent-500/20 to-accent-400/10 rounded-sm bg-gradient-to-br p-4 transition-transform duration-300 group-hover:scale-110">
+              <div className="from-accent-500/20 to-accent-400/10 rounded-xs bg-gradient-to-br p-4 transition-transform duration-300 group-hover:scale-110">
                 <feature.icon className={`h-6 w-6 ${feature.color}`} />
               </div>
               <div>

@@ -34,7 +34,7 @@ export default function CabinHeroSection({
 
       <div className="relative z-10 -mt-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="from-primary-900/95 via-primary-900/90 to-primary-800/95 border-primary-700/50 rounded-sm border bg-gradient-to-br shadow-2xl backdrop-blur-xl">
+          <div className="from-primary-900/95 via-primary-900/90 to-primary-800/95 border-primary-700/50 rounded-xs border bg-gradient-to-br shadow-2xl backdrop-blur-xl">
             <div className="p-6 sm:p-8 lg:p-10">
               <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
                 <CabinInfo

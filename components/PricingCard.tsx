@@ -15,7 +15,7 @@ export default function PricingCard({
 
   return (
     <div className="lg:col-span-1">
-      <div className="from-primary-950/80 to-primary-800/80 border-primary-700/30 flex h-full flex-col justify-between rounded-sm border bg-gradient-to-br p-6">
+      <div className="from-primary-950/80 to-primary-800/80 border-primary-700/30 flex h-full flex-col justify-between rounded-xs border bg-gradient-to-br p-6">
         <div className="space-y-4">
           <div className="text-center">
             {discount > 0 ? (
@@ -49,6 +49,7 @@ export default function PricingCard({
           variant="gradient-with-hover-effect"
           className="mt-4"
           fullWidth
+          iconDirection="right"
           icon={
             <CheckIcon className="h-4 w-4 transition-transform group-hover:scale-110" />
           }
