@@ -14,7 +14,8 @@ export default function Page() {
           className="object-cover object-top"
           alt="Mountains and forests with two cabins"
           priority
-          quality={95}
+          quality={80}
+          sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/50" />
       </div>
@@ -32,7 +33,7 @@ export default function Page() {
         <LinkButton
           href="/cabins"
           variant="gradient-with-hover-effect"
-          size="xl"
+          size="lg"
         >
           Explore luxury cabins
         </LinkButton>

@@ -9,7 +9,15 @@ export const metadata: Metadata = {
   title: "Cabins",
 };
 
-export default function Page() {
+type Props = {
+  searchParams: {
+    capacity?: "small" | "medium" | "large" | "all";
+  };
+};
+
+export default function Page({ searchParams }: Props) {
+  const filter = searchParams?.capacity ?? "all";
+
   return (
     <div className="space-y-8 sm:space-y-12">
       <div className="space-y-6 text-center">
@@ -29,7 +37,7 @@ export default function Page() {
           vacation.
         </p>
 
-        <div className="text-primary-300 flex items-center justify-center gap-6 pt-4 text-sm">
+        <div className="text-primary-300 flex items-center justify-center gap-3 pt-4 text-sm sm:gap-6">
           <div className="flex items-center gap-2">
             <div className="bg-accent-500 h-1.5 w-1.5 rounded-full sm:h-2 sm:w-2"></div>
             <span className="text-xs sm:text-base">Mountain Views</span>
@@ -54,8 +62,9 @@ export default function Page() {
             </p>
           </div>
         }
+        key={filter}
       >
-        <CabinsList />
+        <CabinsList filter={filter} />
       </Suspense>
     </div>
   );

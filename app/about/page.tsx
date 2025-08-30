@@ -1,5 +1,5 @@
+import type { Metadata } from "next";
 import { getCabins } from "@/lib/data-service";
-import { Metadata } from "next";
 import AboutHeroSection from "@/components/AboutHeroSection";
 import AboutStatsSection from "@/components/AboutStatsSection";
 import AboutContentSection from "@/components/AboutContentSection";

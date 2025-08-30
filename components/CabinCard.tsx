@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { UsersIcon, MapPinIcon } from "@heroicons/react/24/solid";
 import { ArrowRight } from "lucide-react";
 import type { Cabin } from "@/lib/data-service";

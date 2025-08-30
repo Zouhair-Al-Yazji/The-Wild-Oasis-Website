@@ -1,8 +1,15 @@
-import { getCabins } from "@/lib/data-service";
+import { Cabin, getCabins } from "@/lib/data-service";
 import CabinCard from "@/components/CabinCard";
+import Filter from "./Filter";
 
-export default async function CabinsList() {
+export type FilterType = {
+  filter: string;
+};
+
+export default async function CabinsList({ filter }: FilterType) {
   const cabins = await getCabins();
+
+  let displayedCabins: Cabin[] = [];
 
   if (!cabins.length) {
     return (
@@ -35,6 +42,21 @@ export default async function CabinsList() {
     );
   }
 
+  if (filter === "all") {
+    displayedCabins = cabins;
+  }
+  if (filter === "small") {
+    displayedCabins = cabins.filter((cabin) => cabin.maxCapacity <= 3);
+  }
+  if (filter === "medium") {
+    displayedCabins = cabins.filter(
+      (cabin) => cabin.maxCapacity >= 4 && cabin.maxCapacity <= 7,
+    );
+  }
+  if (filter === "large") {
+    displayedCabins = cabins.filter((cabin) => cabin.maxCapacity >= 8);
+  }
+
   return (
     <div className="space-y-6 sm:space-y-8">
       <div className="flex flex-wrap items-center justify-between gap-4">
@@ -42,18 +64,18 @@ export default async function CabinsList() {
           Showing
           <span className="text-accent-400 font-semibold">
             {" "}
-            {cabins.length}{" "}
+            {displayedCabins.length}{" "}
           </span>
           luxurious cabins
         </p>
 
-        <div className="text-primary-400 flex items-center gap-2 text-sm">
-          <span>Sorted by popularity</span>
+        <div className="flex items-center gap-2 text-sm">
+          <Filter />
         </div>
       </div>
 
       <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:gap-10 xl:grid-cols-3 2xl:gap-12">
-        {cabins.map((cabin) => (
+        {displayedCabins.map((cabin) => (
           <CabinCard cabin={cabin} key={cabin.id} />
         ))}
       </div>
