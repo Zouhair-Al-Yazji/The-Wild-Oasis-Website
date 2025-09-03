@@ -42,6 +42,15 @@ export type Booking = {
   guests: Guest;
 };
 
+export type Settings = {
+  id?: number;
+  created_at?: string;
+  minBookingLength?: number;
+  maxBookingLength?: number;
+  maxGuestsPerBooking?: number;
+  breakfastPrice?: number;
+};
+
 // GET
 export async function getCabin(id: String) {
   const { data, error } = await supabase

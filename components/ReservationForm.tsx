@@ -1,62 +1,78 @@
-export default function ReservationForm() {
-  // CHANGE
-  const maxCapacity = 23;
+import type { Cabin } from "@/lib/data-service";
+import {
+  UserGroupIcon,
+  ChatBubbleLeftEllipsisIcon,
+  CalendarIcon,
+} from "@heroicons/react/24/outline";
+import LinkButton from "./LinkButton";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+import { Textarea } from "./ui/textarea";
+
+export default function ReservationForm({ cabin }: { cabin: Cabin }) {
+  const maxCapacity = cabin.maxCapacity;
 
   return (
-    <div className="scale-[1.01]">
-      <div className="bg-primary-800 text-primary-300 flex items-center justify-between px-16 py-2">
-        <p>Logged in as</p>
+    <div>
+      <form className="from-primary-900/60 to-primary-800/40 border-primary-700/30 overflow-hidden rounded-xs border bg-gradient-to-br">
+        <div className="space-y-6 p-6">
+          <div className="space-y-3">
+            <label
+              htmlFor="numGuests"
+              className="text-primary-100 flex items-center gap-2 font-medium"
+            >
+              <UserGroupIcon className="text-accent-400 h-5 w-5" />
+              Number of Guests
+            </label>
 
-        {/* <div className='flex gap-4 items-center'>
-          <img
-            // Important to display google profile images
-            referrerPolicy='no-referrer'
-            className='h-8 rounded-full'
-            src={user.image}
-            alt={user.name}
-          />
-          <p>{user.name}</p>
-        </div> */}
-      </div>
+            <Select>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select number of guests..." />
+              </SelectTrigger>
+              <SelectContent>
+                {Array.from({ length: maxCapacity }, (_, i) => i + 1).map(
+                  (x) => (
+                    <SelectItem value={x + ""} key={x}>
+                      {x} {x === 1 ? "guest" : "guests"}
+                    </SelectItem>
+                  ),
+                )}
+              </SelectContent>
+            </Select>
 
-      <form className="bg-primary-900 flex flex-col gap-5 px-16 py-10 text-lg">
-        <div className="space-y-2">
-          <label htmlFor="numGuests">How many guests?</label>
-          <select
-            name="numGuests"
-            id="numGuests"
-            className="bg-primary-200 text-primary-800 w-full rounded-sm px-5 py-3 shadow-sm"
-            required
-          >
-            <option value="" key="">
-              Select number of guests...
-            </option>
-            {Array.from({ length: maxCapacity }, (_, i) => i + 1).map((x) => (
-              <option value={x} key={x}>
-                {x} {x === 1 ? "guest" : "guests"}
-              </option>
-            ))}
-          </select>
+            <p className="text-primary-400 text-sm">
+              Maximum capacity: {maxCapacity}{" "}
+              {maxCapacity === 1 ? "guest" : "guests"}
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            <label
+              htmlFor="observations"
+              className="text-primary-100 flex items-center gap-2 font-medium"
+            >
+              <ChatBubbleLeftEllipsisIcon className="text-accent-400 h-5 w-5" />
+              Special Requests
+            </label>
+            <Textarea placeholder="Tell us about any special requirements, dietary restrictions, accessibility needs, or preferences for your stay..." />
+          </div>
         </div>
 
-        <div className="space-y-2">
-          <label htmlFor="observations">
-            Anything we should know about your stay?
-          </label>
-          <textarea
-            name="observations"
-            id="observations"
-            className="bg-primary-200 text-primary-800 w-full rounded-sm px-5 py-3 shadow-sm"
-            placeholder="Any pets, allergies, special requirements, etc.?"
-          />
-        </div>
-
-        <div className="flex items-center justify-end gap-6">
-          <p className="text-primary-300 text-base">Start by selecting dates</p>
-
-          <button className="bg-accent-500 text-primary-800 hover:bg-accent-600 px-8 py-4 font-semibold transition-all disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300">
-            Reserve now
-          </button>
+        {/* Form Footer */}
+        <div className="bg-primary-950/50 border-primary-700/30 border-t p-6">
+          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+            <p className="text-primary-400 text-center text-sm sm:text-left">
+              Complete date selection to proceed with booking
+            </p>
+            <LinkButton variant="gradient-with-hover-effect">
+              Reserve now
+            </LinkButton>
+          </div>
         </div>
       </form>
     </div>

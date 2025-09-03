@@ -1,10 +1,12 @@
-import type { Metadata } from "next";
-import { getCabin, getCabins } from "@/lib/data-service";
+import CabinAmenitiesSection from "@/components/CabinAmenitiesSection";
+import CabinDescription from "@/components/CabinDescription";
 import CabinHeader from "@/components/CabinHeader";
 import CabinHeroSection from "@/components/CabinHeroSection";
-import CabinDescription from "@/components/CabinDescription";
-import CabinAmenitiesSection from "@/components/CabinAmenitiesSection";
-import CallToActionSection from "@/components/CallToActionSection";
+import Reservation from "@/components/Reservation";
+import Spinner from "@/components/Spinner";
+import { getCabin, getCabins } from "@/lib/data-service";
+import type { Metadata } from "next";
+import { Suspense } from "react";
 
 type Props = {
   params: Promise<{ cabinId: string }>;
@@ -13,7 +15,6 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { cabinId } = await params;
   const { name } = await getCabin(cabinId);
-
   return {
     title: `Cabin ${name}`,
   };
@@ -33,7 +34,6 @@ export default async function CabinPage({ params }: Props) {
   return (
     <div className="min-h-screen">
       <CabinHeader />
-
       <CabinHeroSection
         name={name}
         maxCapacity={maxCapacity}
@@ -41,12 +41,13 @@ export default async function CabinPage({ params }: Props) {
         discount={discount}
         image={image}
       />
-
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-        <div className="space-y-12">
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
+        <div className="space-y-8 lg:space-y-12">
           <CabinDescription description={description} />
           <CabinAmenitiesSection maxCapacity={maxCapacity} />
-          <CallToActionSection cabinName={name} />
+          <Suspense fallback={<Spinner />}>
+            <Reservation cabin={cabin} />
+          </Suspense>
         </div>
       </div>
     </div>
