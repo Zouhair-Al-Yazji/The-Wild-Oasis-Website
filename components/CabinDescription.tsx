@@ -1,4 +1,5 @@
 import { HomeIcon } from "@heroicons/react/24/solid";
+import TextExpander from "./TextExpander";
 
 type CabinDescriptionProps = {
   description: string;
@@ -17,9 +18,9 @@ export default function CabinDescription({
           About This Cabin
         </h2>
       </div>
-      <div className="prose prose-lg max-w-none">
+      <div className="prose prose-lg max-w-3xl">
         <p className="text-primary-200 text-lg leading-relaxed">
-          {description}
+          <TextExpander>{description}</TextExpander>
         </p>
       </div>
     </div>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import Spinner from "@/components/Spinner";
 import CabinsList from "@/components/CabinsList";
+import ReservationReminder from "@/components/ReservationReminder";
 
 export const revalidate = 3600;
 
@@ -65,6 +66,7 @@ export default function Page({ searchParams }: Props) {
         key={filter}
       >
         <CabinsList filter={filter} />
+        <ReservationReminder />
       </Suspense>
     </div>
   );

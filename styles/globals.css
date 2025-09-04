@@ -43,7 +43,7 @@
   --muted-foreground: #7c99b6;
   --accent: oklch(0.8288 0.0528 71.7261);
   --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
+  --destructive: oklch(58.305% 0.23863 28.392 / 0.75);
   --border: #2c3d4f;
   --input: oklch(0.922 0 0);
   --ring: #d2af84;

@@ -59,7 +59,10 @@ export default function ReservationForm({ cabin }: { cabin: Cabin }) {
               <ChatBubbleLeftEllipsisIcon className="text-accent-400 h-5 w-5" />
               Special Requests
             </label>
-            <Textarea placeholder="Tell us about any special requirements, dietary restrictions, accessibility needs, or preferences for your stay..." />
+            <Textarea
+              className="min-h-24"
+              placeholder="Tell us about any special requirements, dietary restrictions, accessibility needs, or preferences for your stay..."
+            />
           </div>
         </div>
 
