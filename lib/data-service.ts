@@ -14,14 +14,14 @@ export type Cabin = {
 };
 
 export type Guest = {
-  id: number;
-  created_at: string;
-  fullName: string;
-  email: string;
-  country: string;
-  countryFlag: string;
-  nationalID: string;
-  nationality: string;
+  id?: number;
+  created_at?: string;
+  fullName?: string;
+  email?: string;
+  country?: string;
+  countryFlag?: string;
+  nationalID?: string;
+  nationality?: string;
 };
 
 export type Booking = {

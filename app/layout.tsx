@@ -3,6 +3,7 @@ import { Josefin_Sans } from "next/font/google";
 import "@/styles/globals.css";
 import Header from "@/components/Header";
 import { ReservationProvider } from "@/components/ContextReservation";
+import { SessionProvider } from "next-auth/react";
 
 const josefin = Josefin_Sans({
   subsets: ["latin"],
@@ -29,12 +30,14 @@ export default function RootLayout({
         className={`${josefin.className} bg-primary-950 text-primary-100 flex min-h-screen flex-col antialiased`}
         suppressHydrationWarning
       >
-        <Header />
-        <div className="grid flex-1 px-4 py-8 md:px-8 md:py-12">
-          <main className="mx-auto w-full max-w-7xl">
-            <ReservationProvider>{children}</ReservationProvider>
-          </main>
-        </div>
+        <SessionProvider>
+          <Header />
+          <div className="grid flex-1 px-4 py-8 md:px-8 md:py-12">
+            <main className="mx-auto w-full max-w-7xl">
+              <ReservationProvider>{children}</ReservationProvider>
+            </main>
+          </div>
+        </SessionProvider>
       </body>
     </html>
   );

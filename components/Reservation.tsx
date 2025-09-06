@@ -5,12 +5,16 @@ import {
 } from "@/lib/data-service";
 import DateSelector from "./DateSelector";
 import ReservationForm from "./ReservationForm";
+import { auth } from "@/lib/auth";
+import LoginMessage from "./LoginMessage";
 
 export default async function Reservation({ cabin }: { cabin: Cabin }) {
   const [settings, bookedDates] = await Promise.all([
     getSettings(),
     getBookedDatesByCabinId(String(cabin.id)),
   ]);
+
+  const session = await auth();
 
   return (
     <div className="space-y-8">
@@ -30,7 +34,7 @@ export default async function Reservation({ cabin }: { cabin: Cabin }) {
           settings={settings}
           bookedDates={bookedDates}
         />
-        <ReservationForm cabin={cabin} />
+        {session?.user ? <ReservationForm cabin={cabin} /> : <LoginMessage />}
       </div>
     </div>
   );

@@ -1,8 +1,7 @@
 import type { Cabin } from "@/lib/data-service";
 import {
-  UserGroupIcon,
   ChatBubbleLeftEllipsisIcon,
-  CalendarIcon,
+  UserGroupIcon,
 } from "@heroicons/react/24/outline";
 import LinkButton from "./LinkButton";
 import {

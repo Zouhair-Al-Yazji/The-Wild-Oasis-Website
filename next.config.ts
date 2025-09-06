@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
       new URL(
         "https://afqrccbryeqkzkwavuhf.supabase.co/storage/v1/object/public/cabin-images/**",
       ),
+      new URL("https://lh3.googleusercontent.com/**"),
+      new URL("https://authjs.dev/img/**"),
     ],
   },
 };

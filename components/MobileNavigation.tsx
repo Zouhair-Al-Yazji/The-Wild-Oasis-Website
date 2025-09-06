@@ -1,4 +1,3 @@
-// app/_components/MobileNavigation.tsx
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -20,6 +19,9 @@ import {
   SheetDescription,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import logo from "@/public/logo.png";
 
 const navigationItems = [
   { href: "/", label: "Home", icon: Home },
@@ -30,6 +32,7 @@ const navigationItems = [
 
 export default function MobileNavigation() {
   const [open, setOpen] = useState(false);
+  const { data: session, status } = useSession();
 
   useEffect(function () {
     function handleResize() {
@@ -46,7 +49,7 @@ export default function MobileNavigation() {
         <Button
           variant="ghost"
           size="icon"
-          className="bg-primary-950 hover:bg-primary-900 border-primary-800/50 hover:border-primary-700/60 text-primary-100 hover:text-accent-400 relative cursor-pointer rounded-md border shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-105 active:scale-95"
+          className="bg-primary-950 hover:bg-primary-900 border-primary-800/50 hover:border-primary-700/60 text-primary-100 hover:text-accent-400 relative cursor-pointer rounded-xs border shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-105 active:scale-95"
           aria-label="Open navigation menu"
         >
           <Menu className="h-5 w-5" />
@@ -75,7 +78,7 @@ export default function MobileNavigation() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="hover:bg-primary-800/40 text-primary-400 hover:text-primary-100 h-8 w-8 cursor-pointer rounded-lg transition-colors"
+                className="hover:bg-primary-800/40 text-primary-400 hover:text-primary-100 h-8 w-8 cursor-pointer rounded-xs transition-colors"
                 aria-label="Close navigation menu"
               >
                 <X className="h-4 w-4" />
@@ -96,14 +99,29 @@ export default function MobileNavigation() {
                     <SheetClose asChild>
                       <Link
                         href={item.href}
-                        className="group hover:bg-primary-800/30 hover:border-primary-700/30 hover:shadow-accent-400/5 flex items-center gap-4 rounded-2xl border border-transparent px-4 py-4 transition-all duration-300 hover:translate-x-1 hover:shadow-lg active:scale-95"
+                        className="group hover:bg-primary-800/30 hover:border-primary-700/30 hover:shadow-accent-400/5 flex items-center gap-4 rounded-sm border border-transparent px-4 py-4 transition-all duration-300 hover:translate-x-1 hover:shadow-lg active:scale-95"
                         onClick={() => setOpen(false)}
                       >
-                        <div className="bg-primary-800/40 group-hover:bg-accent-400/20 flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-300 group-hover:scale-110">
+                        <div className="bg-primary-800/40 group-hover:bg-accent-400/20 flex h-10 w-10 items-center justify-center rounded-xs transition-all duration-300 group-hover:scale-110">
                           <Icon className="text-primary-300 group-hover:text-accent-400 h-5 w-5 transition-colors duration-300" />
                         </div>
+
+                        {item.href === "/account" && status !== "loading" && (
+                          <Image
+                            src={session?.user.image ?? ""}
+                            alt={`${session?.user.name} Image`}
+                            width={28}
+                            height={28}
+                            className="rounded-full"
+                          />
+                        )}
+
                         <span className="text-primary-100 group-hover:text-accent-400 flex-1 text-base font-medium transition-colors duration-300">
-                          {item.label}
+                          {status === "loading"
+                            ? null
+                            : session?.user && item.href === "/account"
+                              ? session.user.name
+                              : item.label}
                         </span>
                         <ChevronRight className="text-primary-500 group-hover:text-accent-400 h-4 w-4 opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100" />
                       </Link>
@@ -117,9 +135,7 @@ export default function MobileNavigation() {
           <div className="border-primary-800/30 bg-primary-950/50 relative z-10 mt-auto border-t backdrop-blur-sm">
             <div className="p-6">
               <div className="mb-3 flex items-center gap-3">
-                <div className="from-accent-400 to-accent-500 flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br">
-                  <span className="text-sm font-bold text-white">W</span>
-                </div>
+                <Image src={logo} alt={"Logo"} width={32} height={32} />
                 <div>
                   <p className="text-primary-200 text-sm font-medium">
                     The Wild Oasis
