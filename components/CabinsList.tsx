@@ -42,17 +42,22 @@ export default async function CabinsList({ filter }: FilterType) {
     );
   }
 
+  console.log(filter);
+
   if (filter === "all") {
     displayedCabins = cabins;
   }
+
   if (filter === "small") {
     displayedCabins = cabins.filter((cabin) => cabin.maxCapacity <= 3);
   }
+
   if (filter === "medium") {
     displayedCabins = cabins.filter(
       (cabin) => cabin.maxCapacity >= 4 && cabin.maxCapacity <= 7,
     );
   }
+
   if (filter === "large") {
     displayedCabins = cabins.filter((cabin) => cabin.maxCapacity >= 8);
   }
@@ -74,7 +79,7 @@ export default async function CabinsList({ filter }: FilterType) {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:gap-10 xl:grid-cols-3 2xl:gap-12">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 lg:gap-10 xl:grid-cols-3 2xl:gap-12">
         {displayedCabins.map((cabin) => (
           <CabinCard cabin={cabin} key={cabin.id} />
         ))}

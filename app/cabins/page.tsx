@@ -11,13 +11,14 @@ export const metadata: Metadata = {
 };
 
 type Props = {
-  searchParams: {
+  searchParams: Promise<{
     capacity?: "small" | "medium" | "large" | "all";
-  };
+  }>;
 };
 
-export default function Page({ searchParams }: Props) {
-  const filter = searchParams?.capacity ?? "all";
+export default async function Page({ searchParams }: Props) {
+  const { capacity } = await searchParams;
+  const filter = capacity ?? "all";
 
   return (
     <div className="space-y-8 sm:space-y-12">
@@ -58,7 +59,7 @@ export default function Page({ searchParams }: Props) {
         fallback={
           <div className="py-16">
             <Spinner />
-            <p className="text-primary-300 mt-4 text-center">
+            <p className="text-primary-300 mt-6 text-center">
               Loading our beautiful cabins...
             </p>
           </div>
