@@ -51,6 +51,12 @@ export type Settings = {
   breakfastPrice?: number;
 };
 
+export type Country = {
+  name: string;
+  flag: string;
+  independent: boolean;
+};
+
 // GET
 export async function getCabin(id: String) {
   const { data, error } = await supabase
@@ -95,8 +101,7 @@ export async function getCabins() {
   return data;
 }
 
-// Guests are uniquely identified by their email address
-export async function getGuest(email: String) {
+export async function getGuest(email: String): Promise<Guest> {
   const { data } = await supabase
     .from("guests")
     .select("*")
@@ -174,7 +179,7 @@ export async function getSettings() {
   return data;
 }
 
-export async function getCountries() {
+export async function getCountries(): Promise<Country[]> {
   try {
     const res = await fetch(
       "https://restcountries.com/v2/all?fields=name,flag",
@@ -215,22 +220,6 @@ export async function createBooking(newBooking: Booking) {
 }
 
 // UPDATE
-// The updatedFields is an object which should ONLY contain the updated data
-export async function updateGuest(id: String, updatedFields: Guest) {
-  const { data, error } = await supabase
-    .from("guests")
-    .update(updatedFields)
-    .eq("id", id)
-    .select()
-    .single();
-
-  if (error) {
-    console.error(error);
-    throw new Error("Guest could not be updated");
-  }
-  return data;
-}
-
 export async function updateBooking(id: String, updatedFields: Booking) {
   const { data, error } = await supabase
     .from("bookings")
