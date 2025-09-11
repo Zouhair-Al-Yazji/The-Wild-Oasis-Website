@@ -10,10 +10,16 @@ export const formatDistanceFromNow = (dateStr: string) =>
     addSuffix: true,
   }).replace("about ", "");
 
-export default function ReservationCard({ booking }: { booking: Booking }) {
+export default function ReservationCard({
+  booking,
+  onDelete,
+}: {
+  booking: Booking;
+  onDelete: (bookingId: number) => void;
+}) {
   const {
     id,
-    guests: { id: guestId },
+    guests,
     startDate,
     endDate,
     numNights,
@@ -21,15 +27,20 @@ export default function ReservationCard({ booking }: { booking: Booking }) {
     numGuests,
     status,
     created_at,
-    cabins: { name, image },
+    cabins,
   } = booking;
+
+  const guestId = guests?.id;
+  const cabinName = cabins?.name;
+  const cabinImage = cabins?.image;
 
   return (
     <div className="border-primary-800 flex border">
       <div className="relative aspect-square h-32">
         <Image
-          src={image}
-          alt={`Cabin ${name}`}
+          src={cabinImage ?? ""}
+          alt={`Cabin ${cabinName}`}
+          fill
           className="border-primary-800 border-r object-cover"
         />
       </div>
@@ -37,7 +48,7 @@ export default function ReservationCard({ booking }: { booking: Booking }) {
       <div className="flex flex-grow flex-col px-6 py-3">
         <div className="flex items-center justify-between">
           <h3 className="text-xl font-semibold">
-            {numNights} nights in Cabin {name}
+            {numNights} nights in Cabin {cabinName}
           </h3>
           {isPast(new Date(startDate)) ? (
             <span className="flex h-7 items-center rounded-sm bg-yellow-800 px-3 text-xs font-bold text-yellow-200 uppercase">
@@ -71,14 +82,18 @@ export default function ReservationCard({ booking }: { booking: Booking }) {
       </div>
 
       <div className="border-primary-800 flex w-[100px] flex-col border-l">
-        <Link
-          href={`/account/reservations/edit/${id}`}
-          className="group text-primary-300 border-primary-800 hover:bg-accent-600 hover:text-primary-900 flex flex-grow items-center gap-2 border-b px-3 text-xs font-bold uppercase transition-colors"
-        >
-          <PencilSquareIcon className="text-primary-600 group-hover:text-primary-800 h-5 w-5 transition-colors" />
-          <span className="mt-1">Edit</span>
-        </Link>
-        <DeleteReservation bookingId={id} />
+        {!isPast(startDate) ? (
+          <>
+            <Link
+              href={`/account/reservations/edit/${id}`}
+              className="group text-primary-300 border-primary-800 hover:bg-accent-600 hover:text-primary-900 flex flex-grow items-center gap-2 border-b px-3 text-xs font-bold uppercase transition-colors"
+            >
+              <PencilSquareIcon className="text-primary-600 group-hover:text-primary-800 h-5 w-5 transition-colors" />
+              <span className="mt-1">Edit</span>
+            </Link>
+            <DeleteReservation bookingId={+id} onDelete={onDelete} />
+          </>
+        ) : null}
       </div>
     </div>
   );

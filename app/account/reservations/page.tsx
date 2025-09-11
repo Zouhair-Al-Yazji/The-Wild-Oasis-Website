@@ -1,14 +1,27 @@
+import ReservationsList from "@/components/ReservationsList";
+import { auth } from "@/lib/auth";
+import { getBookings } from "@/lib/data-service";
 import Link from "next/link";
-import ReservationCard from "@/components/ReservationCard";
-import type { Booking } from "@/lib/data-service";
 
 export const metadata = {
   title: "Reservations",
 };
 
-export default function Page() {
-  // CHANGE
-  const bookings: Booking[] = [];
+export default async function Page() {
+  const session = await auth();
+
+  if (!session?.user?.guestId) {
+    return (
+      <div>
+        <h2 className="text-accent-400 mb-7 text-2xl font-semibold">
+          Your reservations
+        </h2>
+        <p className="text-lg">Please sign in to view your reservations.</p>
+      </div>
+    );
+  }
+
+  const bookings = await getBookings(Number(session.user.guestId));
 
   return (
     <div>
@@ -24,11 +37,7 @@ export default function Page() {
           </Link>
         </p>
       ) : (
-        <ul className="space-y-6">
-          {bookings.map((booking) => (
-            <ReservationCard booking={booking} key={booking.id} />
-          ))}
-        </ul>
+        <ReservationsList bookings={bookings} />
       )}
     </div>
   );
