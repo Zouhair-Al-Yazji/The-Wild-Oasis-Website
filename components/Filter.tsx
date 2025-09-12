@@ -10,7 +10,7 @@ export default function Filter() {
 
   function handleFilter(filter: string) {
     const params = new URLSearchParams(searchParams);
-    params.set("capacity", filter + "");
+    params.set("capacity", filter.toString());
     router.replace(`${pathname}?${params.toString()}`);
   }
 

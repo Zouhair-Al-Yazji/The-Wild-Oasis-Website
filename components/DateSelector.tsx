@@ -1,10 +1,16 @@
 "use client";
+
 import { Calendar } from "@/components/ui/calendar";
 import type { Cabin, Settings } from "@/lib/data-service";
 import { CalendarDaysIcon, ClockIcon } from "@heroicons/react/24/outline";
+import {
+  differenceInDays,
+  isPast,
+  isSameDay,
+  isWithinInterval,
+} from "date-fns";
 import { type DateRange } from "react-day-picker";
 import { useReservation } from "./ContextReservation";
-import LinkButton from "./LinkButton";
 import { Button } from "./ui/button";
 
 type DateSelectorProps = {
@@ -13,26 +19,41 @@ type DateSelectorProps = {
   bookedDates: Date[];
 };
 
+function isAlreadyBooked(range: DateRange, datesArr: Date[]) {
+  return (
+    range.from &&
+    range.to &&
+    datesArr.some((date) =>
+      isWithinInterval(date, {
+        start: range.from ?? new Date(),
+        end: range.to ?? new Date(),
+      }),
+    )
+  );
+}
+
 export default function DateSelector({
   cabin,
   settings,
   bookedDates,
 }: DateSelectorProps) {
   const { range, setRange, resetRange } = useReservation();
+  const { discount, regularPrice } = cabin;
+  const { minBookingLength, maxBookingLength } = settings;
+  const displayRange = isAlreadyBooked(range, bookedDates)
+    ? { from: undefined, to: undefined }
+    : range;
+
+  const numNights = differenceInDays(
+    displayRange.to ?? new Date(),
+    displayRange.from ?? new Date(),
+  );
 
   const formatDateRange = (range: DateRange | undefined) => {
     if (!range?.from) return "Select dates";
     if (!range.to) return range.from.toLocaleDateString();
     return `${range.from.toLocaleDateString()} - ${range.to.toLocaleDateString()}`;
   };
-
-  const calculateNights = (range: DateRange | undefined) => {
-    if (!range?.from || !range?.to) return 0;
-    const diffTime = Math.abs(range.to.getTime() - range.from.getTime());
-    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  };
-
-  const { minBookingLength, maxBookingLength } = settings;
 
   return (
     <div className="space-y-6">
@@ -59,7 +80,6 @@ export default function DateSelector({
           )}
         </div>
 
-        {/* Selected Date Display */}
         <div className="bg-primary-950/50 border-primary-700/30 rounded-xs border p-4">
           <div className="flex items-center justify-between">
             <div>
@@ -68,14 +88,13 @@ export default function DateSelector({
                 {formatDateRange(range)}
               </p>
             </div>
-            {calculateNights(range) > 0 && (
+            {numNights > 0 && (
               <div className="text-right">
                 <p className="text-primary-400 mb-1 text-sm">Duration</p>
                 <div className="flex items-center gap-1">
                   <ClockIcon className="text-accent-400 h-4 w-4" />
                   <p className="text-primary-100 font-medium">
-                    {calculateNights(range)}{" "}
-                    {calculateNights(range) === 1 ? "night" : "nights"}
+                    {numNights} {numNights === 1 ? "night" : "nights"}
                   </p>
                 </div>
               </div>
@@ -87,13 +106,16 @@ export default function DateSelector({
       <div className="from-primary-900/60 to-primary-800/40 border-primary-700/30 rounded-xs border bg-gradient-to-br p-6">
         <Calendar
           mode="range"
-          defaultMonth={range?.from}
+          defaultMonth={new Date()}
           min={minBookingLength ?? 0 + 1}
           max={maxBookingLength}
-          selected={range}
+          selected={displayRange}
           onSelect={setRange}
           numberOfMonths={2}
-          disabled={bookedDates}
+          disabled={(curDate) =>
+            isPast(curDate) ||
+            bookedDates.some((date) => isSameDay(date, curDate))
+          }
           className="mx-auto"
           required
         />
@@ -116,8 +138,7 @@ export default function DateSelector({
         </div>
       </div>
 
-      {/* Pricing Summary (if dates selected) */}
-      {calculateNights(range) > 0 && (
+      {numNights > 0 && (
         <div className="from-accent-900/20 to-accent-800/10 border-accent-700/30 rounded-xs border bg-gradient-to-br p-6">
           <h4 className="text-primary-50 mb-4 text-lg font-semibold">
             Pricing Summary
@@ -125,23 +146,21 @@ export default function DateSelector({
           <div className="space-y-3">
             <div className="text-primary-200 flex justify-between">
               <span>
-                ${cabin.regularPrice} × {calculateNights(range)} nights
+                ${regularPrice} × {numNights} nights
               </span>
-              <span>${cabin.regularPrice * calculateNights(range)}</span>
+              <span>${regularPrice ?? 0 * numNights}</span>
             </div>
-            {cabin.discount > 0 && (
+            {(discount ?? 0) > 0 && (
               <div className="flex justify-between text-green-400">
                 <span>Discount</span>
-                <span>-${cabin.discount * calculateNights(range)}</span>
+                <span>-${discount ?? 0 * numNights}</span>
               </div>
             )}
             <div className="border-primary-700/30 border-t pt-3">
               <div className="text-primary-50 flex justify-between text-lg font-semibold">
                 <span>Total</span>
                 <span>
-                  $
-                  {(cabin.regularPrice - cabin.discount) *
-                    calculateNights(range)}
+                  ${(regularPrice ?? 0 - (discount ?? 0)) * numNights}
                 </span>
               </div>
             </div>

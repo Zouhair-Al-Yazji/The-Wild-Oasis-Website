@@ -44,6 +44,14 @@ export type Booking = {
   guests?: Guest;
 };
 
+export type BookingDataAction = {
+  startDate: Date | undefined;
+  endDate: Date | undefined;
+  numNights: number;
+  cabinId: number | undefined;
+  cabinPrice: number;
+};
+
 export type Settings = {
   id?: number;
   created_at?: string;
@@ -60,7 +68,7 @@ export type Country = {
 };
 
 // GET
-export async function getCabin(id: String) {
+export async function getCabin(id: String): Promise<Cabin> {
   const { data, error } = await supabase
     .from("cabins")
     .select("*")
@@ -113,7 +121,7 @@ export async function getGuest(email: String): Promise<Guest> {
   return data;
 }
 
-export async function getBooking(id: String) {
+export async function getBooking(id: String): Promise<Booking> {
   const { data, error, count } = await supabase
     .from("bookings")
     .select("*")
@@ -206,37 +214,5 @@ export async function createGuest(newGuest: Guest) {
     throw new Error("Guest could not be created");
   }
 
-  return data;
-}
-
-export async function createBooking(newBooking: Booking) {
-  const { data, error } = await supabase
-    .from("bookings")
-    .insert([newBooking])
-    // So that the newly created object gets returned!
-    .select()
-    .single();
-
-  if (error) {
-    console.error(error);
-    throw new Error("Booking could not be created");
-  }
-
-  return data;
-}
-
-// UPDATE
-export async function updateBooking(id: String, updatedFields: Booking) {
-  const { data, error } = await supabase
-    .from("bookings")
-    .update(updatedFields)
-    .eq("id", id)
-    .select()
-    .single();
-
-  if (error) {
-    console.error(error);
-    throw new Error("Booking could not be updated");
-  }
   return data;
 }

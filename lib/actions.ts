@@ -1,9 +1,10 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { auth, signIn } from "./auth";
+import { type Booking, BookingDataAction, getBookings } from "./data-service";
 import { supabase } from "./supabase";
-import { type Booking, getBooking, getBookings } from "./data-service";
 
 export async function signInAction() {
   await signIn("google", { redirectTo: "/account" });
@@ -49,9 +50,9 @@ export async function deleteBookingAction(bookingId: number) {
   }
 
   const bookings = await getBookings(Number(session.user.guestId));
-  const bookingIds = bookings.map((booking: Booking) => booking.id + "");
+  const bookingIds = bookings.map((booking: Booking) => booking.id.toString());
 
-  if (!bookingIds.includes(bookingId + "")) {
+  if (!bookingIds.includes(bookingId.toString())) {
     throw new Error("You are not allowed to delete this booking");
   }
 
@@ -65,4 +66,68 @@ export async function deleteBookingAction(bookingId: number) {
   }
 
   revalidatePath("/account/reservations");
+}
+
+export async function updateBookingAction(formData: FormData) {
+  const session = await auth();
+  if (!session?.user)
+    throw new Error("You must logged in to perform this action");
+
+  const bookingId = Number(formData.get("bookingId"));
+
+  const bookings = await getBookings(Number(session.user.guestId));
+  const bookingIds = bookings.map((booking: Booking) => booking.id.toString());
+
+  if (!bookingIds.includes(bookingId.toString())) {
+    throw new Error("You are not allowed to delete this booking");
+  }
+
+  const updateData = {
+    numGuests: Number(formData.get("numGuests")),
+    observations: formData.get("observations")?.slice(0, 1000),
+  };
+
+  const { error } = await supabase
+    .from("bookings")
+    .update(updateData)
+    .eq("id", bookingId);
+
+  if (error) {
+    throw new Error("Booking could not be updated");
+  }
+
+  revalidatePath(`account/reservations/edit/${bookingId}`);
+  revalidatePath("account/reservations");
+
+  redirect("/account/reservations");
+}
+
+export async function createBookingAction(
+  bookingData: BookingDataAction,
+  formData: FormData,
+) {
+  const session = await auth();
+  if (!session?.user)
+    throw new Error("You must logged in to perform this action");
+
+  const newBooking = {
+    ...bookingData,
+    numGuests: Number(formData.get("numGuests")),
+    observations: formData.get("observations")?.slice(0, 1000),
+    guestId: session.user.guestId,
+    totalPrice: bookingData.cabinPrice,
+    extrasPrice: 0,
+    hasBreakfast: false,
+    status: "unconfirmed",
+    isPaid: false,
+  };
+
+  const { error } = await supabase.from("bookings").insert([newBooking]);
+
+  if (error) {
+    throw new Error("Booking could not be created");
+  }
+
+  revalidatePath(`/cabins/${bookingData.cabinId}`);
+  redirect("/cabins/thankyou");
 }
