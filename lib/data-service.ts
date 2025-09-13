@@ -94,7 +94,7 @@ export async function getCabinPrice(id: string) {
     console.error(error);
   }
 
-  return data;
+  return data as Cabin;
 }
 
 export async function getCabins() {

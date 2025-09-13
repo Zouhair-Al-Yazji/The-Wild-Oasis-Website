@@ -19,18 +19,15 @@ export default function ReservationCard({
 }) {
   const {
     id,
-    guests,
     startDate,
     endDate,
     numNights,
     totalPrice,
     numGuests,
-    status,
     created_at,
     cabins,
   } = booking;
 
-  const guestId = guests?.id;
   const cabinName = cabins?.name;
   const cabinImage = cabins?.image;
   const isPastBooking = isPast(new Date(startDate));

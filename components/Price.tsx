@@ -5,10 +5,10 @@ export default async function Price({ cabinId }: { cabinId: string }) {
 
   return (
     <p className="mt-12 flex items-baseline gap-3 text-3xl">
-      {discount > 0 ? (
+      {(discount ?? 0 > 0) ? (
         <>
           <span className="text-3xl font-[350]">
-            ${regularPrice - discount}
+            ${regularPrice ?? 0 - (discount ?? 0)}
           </span>
           <span className="text-primary-600 font-semibold line-through">
             ${regularPrice}
