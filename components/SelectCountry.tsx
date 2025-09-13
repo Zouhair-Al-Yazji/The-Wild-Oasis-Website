@@ -1,4 +1,11 @@
 import { getCountries } from "@/lib/data-service";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 type SelectCountry = {
   defaultCountry: string;
@@ -18,18 +25,17 @@ export default async function SelectCountry({
     countries.find((country) => country.name === defaultCountry)?.flag ?? "";
 
   return (
-    <select
-      name={name}
-      id={id}
-      defaultValue={`${defaultCountry}%${flag}`}
-      className={className}
-    >
-      <option value="">Select country...</option>
-      {countries.map((c) => (
-        <option key={c.name} value={`${c.name}%${c.flag}`}>
-          {c.name}
-        </option>
-      ))}
-    </select>
+    <Select name={name} defaultValue={`${defaultCountry}%${flag}`}>
+      <SelectTrigger id={id} className="w-full cursor-pointer">
+        <SelectValue placeholder="Select country..." />
+      </SelectTrigger>
+      <SelectContent>
+        {countries.map((c) => (
+          <SelectItem value={`${c.name}%${c.flag}`} key={c.name}>
+            {c.name}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   );
 }

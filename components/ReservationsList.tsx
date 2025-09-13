@@ -22,7 +22,7 @@ export default function ReservationsList({
   }
 
   return (
-    <ul className="space-y-6">
+    <ul className="space-y-4">
       {optimisticBookings.map((booking) => (
         <ReservationCard
           booking={booking}
