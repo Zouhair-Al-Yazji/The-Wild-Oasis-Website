@@ -35,16 +35,16 @@ export default async function CabinPage({ params }: Props) {
     <div className="min-h-screen">
       <CabinHeader />
       <CabinHeroSection
-        name={name}
-        maxCapacity={maxCapacity}
-        regularPrice={regularPrice}
-        discount={discount}
-        image={image}
+        name={name ?? ""}
+        maxCapacity={maxCapacity ?? 0}
+        regularPrice={regularPrice ?? 0}
+        discount={discount ?? 0}
+        image={image ?? ""}
       />
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
         <div className="space-y-8 lg:space-y-12">
-          <CabinDescription description={description} />
-          <CabinAmenitiesSection maxCapacity={maxCapacity} />
+          <CabinDescription description={description ?? ""} />
+          <CabinAmenitiesSection maxCapacity={maxCapacity ?? 0} />
           <Suspense fallback={<Spinner />}>
             <Reservation cabin={cabin} />
           </Suspense>
