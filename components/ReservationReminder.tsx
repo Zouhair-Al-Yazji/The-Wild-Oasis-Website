@@ -22,7 +22,7 @@ export default function ReservationReminder() {
               <div className="flex items-center gap-2">
                 <span className="animate-bounce text-xl lg:text-2xl">👋</span>
                 <p className="text-primary-900 mb-1 text-base font-bold lg:text-lg">
-                  Don't forget to reserve!
+                  Don&apos;t forget to reserve!
                 </p>
               </div>
               <div className="text-primary-800 flex flex-wrap items-center gap-1 text-sm font-semibold lg:gap-2">

@@ -15,8 +15,8 @@ export default function AboutHeroSection() {
             Welcome to The Wild Oasis
           </h1>
           <p className="text-primary-200 mx-auto mt-6 max-w-2xl text-lg sm:text-xl">
-            Where nature's beauty and comfortable living blend seamlessly in the
-            heart of the Italian Dolomites
+            Where nature&apos;s beauty and comfortable living blend seamlessly
+            in the heart of the Italian Dolomites
           </p>
         </div>
       </div>

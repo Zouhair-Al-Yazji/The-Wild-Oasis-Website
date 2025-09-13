@@ -19,8 +19,8 @@ export default function NotFound() {
             Oops! Cabin Not Found
           </h2>
           <p className="text-primary-300 mx-auto max-w-md text-lg leading-relaxed">
-            The cabin you're looking for seems to have wandered off into the
-            digital void.
+            The cabin you&apos;re looking for seems to have wandered off into
+            the digital void.
           </p>
         </div>
 

@@ -130,7 +130,7 @@ export default async function Page() {
                 No Reservations Yet
               </h2>
               <p className="text-text-400 leading-relaxed">
-                You haven't made any reservations yet. Discover our luxury
+                You haven&apos;t made any reservations yet. Discover our luxury
                 cabins and book your perfect getaway.
               </p>
             </div>
@@ -146,7 +146,6 @@ export default async function Page() {
           </div>
         </div>
       ) : (
-        /* Reservations List */
         <ReservationsList bookings={bookings} />
       )}
     </div>

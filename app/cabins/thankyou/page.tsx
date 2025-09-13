@@ -20,7 +20,8 @@ export default function Page() {
           </h1>
           <p className="text-text-400 mx-auto max-w-lg text-lg leading-relaxed md:text-xl">
             Thank you for choosing our luxury cabins. Your booking has been
-            successfully confirmed and you're all set for an amazing getaway!
+            successfully confirmed and you&apos;re all set for an amazing
+            getaway!
           </p>
         </div>
 

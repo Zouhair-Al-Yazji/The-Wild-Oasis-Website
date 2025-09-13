@@ -34,8 +34,8 @@ export default async function CabinsList({ filter }: FilterType) {
             No Cabins Available
           </h3>
           <p className="text-primary-300">
-            We're currently updating our cabin listings. Please check back soon
-            for available accommodations.
+            We&apos;re currently updating our cabin listings. Please check back
+            soon for available accommodations.
           </p>
         </div>
       </div>

@@ -19,7 +19,7 @@ export default function NotFound() {
             Oops! Page Not Found
           </h2>
           <p className="text-primary-300 mx-auto max-w-md text-lg leading-relaxed">
-            The page you're looking for seems to have wandered off into the
+            The page you&apos;re looking for seems to have wandered off into the
             digital void.
           </p>
         </div>

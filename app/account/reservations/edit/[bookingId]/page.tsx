@@ -17,7 +17,7 @@ type Props = {
 
 export default async function Page({ params }: Props) {
   const { bookingId } = await params;
-  const { observations, numGuests, cabinId } = await getBooking(bookingId);
+  const { observations, cabinId } = await getBooking(bookingId);
   const { maxCapacity } = await getCabin(cabinId ?? "");
 
   return (
