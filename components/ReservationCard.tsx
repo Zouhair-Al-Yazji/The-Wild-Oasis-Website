@@ -1,9 +1,8 @@
-import { Edit3, Calendar, Users, DollarSign, Clock } from "lucide-react";
-import { format, formatDistance, isPast, isToday, parseISO } from "date-fns";
-import DeleteReservation from "./DeleteReservation";
-import Image from "next/image";
-import Link from "next/link";
 import type { Booking } from "@/lib/data-service";
+import { format, formatDistance, isPast, isToday, parseISO } from "date-fns";
+import { Calendar, Clock, DollarSign, Edit3, Users } from "lucide-react";
+import Image from "next/image";
+import DeleteReservation from "./DeleteReservation";
 import LinkButton from "./LinkButton";
 
 export const formatDistanceFromNow = (dateStr: string) =>

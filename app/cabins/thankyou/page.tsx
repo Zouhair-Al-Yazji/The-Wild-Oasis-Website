@@ -1,5 +1,5 @@
 import LinkButton from "@/components/LinkButton";
-import { ArrowRight, Calendar, CheckCircle, Home } from "lucide-react";
+import { Calendar, CheckCircle, Home } from "lucide-react";
 import Link from "next/link";
 
 export default function Page() {

@@ -1,7 +1,3 @@
-import Link from "next/link";
-import { CheckIcon } from "@heroicons/react/24/outline";
-import LinkButton from "./LinkButton";
-
 type PricingCardProps = {
   regularPrice: number;
   discount: number;
@@ -43,19 +39,6 @@ export default function PricingCard({
             )}
           </div>
         </div>
-
-        <LinkButton
-          href="/account/reservations"
-          variant="gradient-with-hover-effect"
-          className="mt-4"
-          fullWidth
-          iconDirection="right"
-          icon={
-            <CheckIcon className="h-4 w-4 transition-transform group-hover:scale-110" />
-          }
-        >
-          Reserve Now
-        </LinkButton>
       </div>
     </div>
   );

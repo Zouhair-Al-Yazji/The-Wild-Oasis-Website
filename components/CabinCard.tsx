@@ -6,15 +6,17 @@ import LinkButton from "./LinkButton";
 
 export default function CabinCard({ cabin }: { cabin: Cabin }) {
   const { id, name, maxCapacity, regularPrice, discount, image } = cabin;
-  const discountedPrice = regularPrice - discount;
+  const discountedPrice = regularPrice ?? 0 - (discount ?? 0);
   const discountPercentage =
-    discount > 0 ? Math.round((discount / regularPrice) * 100) : 0;
+    (discount ?? 0 > 0)
+      ? Math.round((discount ?? 0 / (regularPrice ?? 1)) * 100)
+      : 0;
 
   return (
     <div className="group border-primary-800/50 from-primary-950 via-primary-900 to-primary-950 hover:border-accent-500/30 hover:shadow-accent-500/10 relative overflow-hidden rounded-xs border bg-gradient-to-br shadow-lg transition-all duration-300 hover:shadow-2xl">
       <div className="relative aspect-[4/3] overflow-hidden sm:aspect-[16/10]">
         <Image
-          src={image}
+          src={image ?? ""}
           alt={`Cabin ${name}`}
           fill
           priority
@@ -24,7 +26,7 @@ export default function CabinCard({ cabin }: { cabin: Cabin }) {
 
         <div className="from-primary-900/80 absolute inset-0 bg-gradient-to-t via-transparent to-transparent" />
 
-        {discount > 0 && (
+        {(discount ?? 0) > 0 && (
           <div className="bg-accent-500 text-primary-900 absolute top-3 right-3 rounded-xs px-3 py-1.5 text-xs font-bold shadow-lg sm:top-4 sm:right-4 sm:px-4 sm:py-2 sm:text-sm">
             -{discountPercentage}%
           </div>
@@ -55,7 +57,7 @@ export default function CabinCard({ cabin }: { cabin: Cabin }) {
         <div className="space-y-2">
           <div className="flex items-baseline justify-between">
             <div className="space-y-1">
-              {discount > 0 ? (
+              {(discount ?? 0) > 0 ? (
                 <div className="flex flex-wrap items-baseline gap-2">
                   <span className="text-primary-50 text-2xl font-semibold sm:text-3xl">
                     ${discountedPrice}
@@ -96,7 +98,6 @@ export default function CabinCard({ cabin }: { cabin: Cabin }) {
         </div>
       </div>
 
-      {/* Card border glow effect */}
       <div className="from-accent-500/0 via-accent-500/5 to-accent-500/0 pointer-events-none absolute inset-0 rounded-xl bg-gradient-to-r opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
     </div>
   );

@@ -1,8 +1,7 @@
 "use client";
 
 import LinkButton from "@/components/LinkButton";
-import { Button } from "@/components/ui/button";
-import { AlertTriangle, RefreshCw, Home } from "lucide-react";
+import { AlertTriangle, Home, RefreshCw } from "lucide-react";
 
 type ErrorProps = {
   error: Error & { digest?: string };

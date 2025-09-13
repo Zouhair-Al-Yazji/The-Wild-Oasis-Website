@@ -26,7 +26,6 @@ export default async function Page() {
         <SelectCountry
           name="nationality"
           id="nationality"
-          className="bg-primary-200 text-primary-800 w-full rounded-sm px-5 py-3 shadow-sm"
           defaultCountry={existingGuest.nationality ?? ""}
         />
       </UpdateProfileForm>

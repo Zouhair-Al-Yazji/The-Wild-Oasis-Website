@@ -1,4 +1,3 @@
-import Link from "next/link";
 import LinkButton from "./LinkButton";
 
 type CallToActionSectionProps = {

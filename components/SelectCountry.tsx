@@ -11,14 +11,12 @@ type SelectCountry = {
   defaultCountry: string;
   name: string;
   id: string;
-  className: string;
 };
 
 export default async function SelectCountry({
   defaultCountry,
   name,
   id,
-  className,
 }: SelectCountry) {
   const countries = await getCountries();
   const flag =
