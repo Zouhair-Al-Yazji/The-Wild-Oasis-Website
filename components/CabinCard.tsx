@@ -8,8 +8,8 @@ export default function CabinCard({ cabin }: { cabin: Cabin }) {
   const { id, name, maxCapacity, regularPrice, discount, image } = cabin;
   const discountedPrice = regularPrice ?? 0 - (discount ?? 0);
   const discountPercentage =
-    (discount ?? 0 > 0)
-      ? Math.round((discount ?? 0 / (regularPrice ?? 1)) * 100)
+    (discount ?? 0) > 0
+      ? Math.round(((discount ?? 0) / (regularPrice ?? 1)) * 100)
       : 0;
 
   return (
