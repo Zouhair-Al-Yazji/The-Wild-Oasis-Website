@@ -68,7 +68,7 @@ export type Country = {
 };
 
 // GET
-export async function getCabin(id: String): Promise<Cabin> {
+export async function getCabin(id: string): Promise<Cabin> {
   const { data, error } = await supabase
     .from("cabins")
     .select("*")
@@ -83,7 +83,7 @@ export async function getCabin(id: String): Promise<Cabin> {
   return data;
 }
 
-export async function getCabinPrice(id: String) {
+export async function getCabinPrice(id: string) {
   const { data, error } = await supabase
     .from("cabins")
     .select("regularPrice, discount")
@@ -111,7 +111,7 @@ export async function getCabins() {
   return data;
 }
 
-export async function getGuest(email: String): Promise<Guest> {
+export async function getGuest(email: string): Promise<Guest> {
   const { data } = await supabase
     .from("guests")
     .select("*")
@@ -121,8 +121,8 @@ export async function getGuest(email: String): Promise<Guest> {
   return data;
 }
 
-export async function getBooking(id: String): Promise<Booking> {
-  const { data, error, count } = await supabase
+export async function getBooking(id: string): Promise<Booking> {
+  const { data, error } = await supabase
     .from("bookings")
     .select("*")
     .eq("id", id)
