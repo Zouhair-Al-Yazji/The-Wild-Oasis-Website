@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
+
+import { useState, useEffect, useCallback, memo } from "react";
 import Link from "next/link";
 import {
   Menu,
@@ -16,31 +17,80 @@ import {
   SheetTrigger,
   SheetClose,
   SheetTitle,
-  SheetDescription,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import logo from "@/public/logo.png";
 
-const navigationItems = [
+const NAV_ITEMS = [
   { href: "/", label: "Home", icon: Home },
   { href: "/cabins", label: "Cabins", icon: Building2 },
   { href: "/about", label: "About", icon: Info },
   { href: "/account", label: "Guest Area", icon: User },
-];
+] as const;
+
+const NavItem = memo(
+  ({
+    item,
+    user,
+    onClose,
+  }: {
+    item: (typeof NAV_ITEMS)[number];
+    user?: { name?: string | null; image?: string | null };
+    onClose: () => void;
+  }) => {
+    const Icon = item.icon;
+    const isAccount = item.href === "/account";
+    const displayName =
+      user && isAccount ? (user.name ?? item.label) : item.label;
+
+    return (
+      <SheetClose asChild>
+        <Link
+          href={item.href}
+          onClick={onClose}
+          className="group hover:bg-primary-800/50 flex items-center gap-4 rounded-lg px-4 py-3 transition-colors duration-200"
+        >
+          <div className="bg-primary-800/40 group-hover:bg-accent-400/20 flex h-10 w-10 items-center justify-center rounded-lg transition-colors duration-200">
+            <Icon className="text-primary-300 group-hover:text-accent-400 h-5 w-5 transition-colors duration-200" />
+          </div>
+
+          {isAccount && user?.image && (
+            <Image
+              src={user.image}
+              alt="User avatar"
+              width={28}
+              height={28}
+              className="rounded-full"
+            />
+          )}
+
+          <span className="text-primary-100 group-hover:text-accent-400 flex-1 text-base font-medium transition-colors duration-200">
+            {displayName}
+          </span>
+
+          <ChevronRight className="text-primary-500 group-hover:text-accent-400 h-4 w-4 opacity-0 transition-all duration-200 group-hover:opacity-100" />
+        </Link>
+      </SheetClose>
+    );
+  },
+);
+
+NavItem.displayName = "NavItem";
 
 export default function MobileNavigation() {
   const [open, setOpen] = useState(false);
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
-  useEffect(function () {
-    function handleResize() {
-      if (window.innerWidth >= 768) setOpen(false);
-    }
+  const handleClose = useCallback(() => setOpen(false), []);
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    const handleChange = (e: MediaQueryListEvent) => {
+      if (e.matches) setOpen(false);
+    };
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
   }, []);
 
   return (
@@ -49,7 +99,7 @@ export default function MobileNavigation() {
         <Button
           variant="ghost"
           size="icon"
-          className="bg-primary-950 hover:bg-primary-900 border-primary-800/50 hover:border-primary-700/60 text-primary-100 hover:text-accent-400 relative cursor-pointer rounded-xs border shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-105 active:scale-95"
+          className="bg-primary-950/90 hover:bg-primary-900 border-primary-800/50 text-primary-100 hover:text-accent-400 cursor-pointer rounded-lg border backdrop-blur-sm transition-colors duration-200 hover:scale-105 active:scale-95"
           aria-label="Open navigation menu"
         >
           <Menu className="h-5 w-5" />
@@ -58,96 +108,42 @@ export default function MobileNavigation() {
 
       <SheetContent
         side="right"
-        className="from-primary-950 via-primary-950 to-primary-900 border-primary-800/50 text-primary-100 w-80 overflow-hidden border-l bg-gradient-to-br p-0 backdrop-blur-xl"
+        className="border-primary-800/50 bg-primary-950/95 w-80 border-l p-0 backdrop-blur-xl"
       >
-        <div className="relative flex h-full flex-col">
-          <div className="from-accent-400/5 to-primary-800/10 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent" />
-          <div className="bg-accent-400/10 pointer-events-none absolute top-20 -right-20 h-40 w-40 rounded-full blur-3xl" />
-          <div className="bg-primary-600/20 pointer-events-none absolute bottom-20 -left-20 h-32 w-32 rounded-full blur-2xl" />
-
-          <div className="border-primary-800/30 bg-primary-950/50 relative z-10 flex items-center justify-between border-b p-6 backdrop-blur-sm">
-            <div>
-              <SheetTitle className="from-accent-400 to-accent-300 bg-gradient-to-r bg-clip-text text-xl font-bold text-transparent">
-                The Wild Oasis
-              </SheetTitle>
-              <SheetDescription className="text-primary-400 mt-1 text-sm">
-                Luxury mountain retreat
-              </SheetDescription>
-            </div>
-            <SheetClose asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="hover:bg-primary-800/40 text-primary-400 hover:text-primary-100 h-8 w-8 cursor-pointer rounded-xs transition-colors"
-                aria-label="Close navigation menu"
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            </SheetClose>
+        <div className="flex h-full flex-col">
+          {/* Header */}
+          <div className="border-primary-800/30 bg-primary-950/80 flex items-center justify-between border-b p-6">
+            <SheetTitle>
+              <div>
+                <h3 className="from-accent-400 to-accent-300 bg-gradient-to-r bg-clip-text text-xl font-bold text-transparent">
+                  The Wild Oasis
+                </h3>
+                <p className="text-primary-400 mt-1 text-sm">
+                  Luxury mountain retreat
+                </p>
+              </div>
+            </SheetTitle>
           </div>
 
-          <nav className="relative z-10 flex-1 pt-8">
-            <ul className="space-y-2 px-4">
-              {navigationItems.map((item, index) => {
-                const Icon = item.icon;
-                return (
-                  <li
-                    key={item.href}
-                    style={{ animationDelay: `${index * 50}ms` }}
-                    className="animate-in slide-in-from-right-10 fade-in duration-300"
-                  >
-                    <SheetClose asChild>
-                      <Link
-                        href={item.href}
-                        className="group hover:bg-primary-800/30 hover:border-primary-700/30 hover:shadow-accent-400/5 flex items-center gap-4 rounded-sm border border-transparent px-4 py-4 transition-all duration-300 hover:translate-x-1 hover:shadow-lg active:scale-95"
-                        onClick={() => setOpen(false)}
-                      >
-                        <div className="bg-primary-800/40 group-hover:bg-accent-400/20 flex h-10 w-10 items-center justify-center rounded-xs transition-all duration-300 group-hover:scale-110">
-                          <Icon className="text-primary-300 group-hover:text-accent-400 h-5 w-5 transition-colors duration-300" />
-                        </div>
-
-                        {item.href === "/account" && status !== "loading" && (
-                          <Image
-                            src={session?.user.image ?? ""}
-                            alt={`${session?.user.name} Image`}
-                            width={28}
-                            height={28}
-                            className="rounded-full"
-                          />
-                        )}
-
-                        <span className="text-primary-100 group-hover:text-accent-400 flex-1 text-base font-medium transition-colors duration-300">
-                          {status === "loading"
-                            ? null
-                            : session?.user && item.href === "/account"
-                              ? session.user.name
-                              : item.label}
-                        </span>
-                        <ChevronRight className="text-primary-500 group-hover:text-accent-400 h-4 w-4 opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100" />
-                      </Link>
-                    </SheetClose>
-                  </li>
-                );
-              })}
+          {/* Navigation */}
+          <nav className="flex-1 pt-6">
+            <ul className="space-y-1 px-4">
+              {NAV_ITEMS.map((item) => (
+                <NavItem
+                  key={item.href}
+                  item={item}
+                  user={session?.user}
+                  onClose={handleClose}
+                />
+              ))}
             </ul>
           </nav>
 
-          <div className="border-primary-800/30 bg-primary-950/50 relative z-10 mt-auto border-t backdrop-blur-sm">
-            <div className="p-6">
-              <div className="mb-3 flex items-center gap-3">
-                <Image src={logo} alt={"Logo"} width={32} height={32} />
-                <div>
-                  <p className="text-primary-200 text-sm font-medium">
-                    The Wild Oasis
-                  </p>
-                  <p className="text-primary-500 text-xs">Mountain Retreat</p>
-                </div>
-              </div>
-              <div className="via-primary-700/50 mb-3 h-px bg-gradient-to-r from-transparent to-transparent" />
-              <p className="text-primary-500 text-center text-xs">
-                © {new Date().getFullYear()} All rights reserved
-              </p>
-            </div>
+          {/* Footer */}
+          <div className="border-primary-800/30 bg-primary-950/80 border-t p-6">
+            <p className="text-primary-500 text-center text-xs">
+              © {new Date().getFullYear()} The Wild Oasis. All rights reserved.
+            </p>
           </div>
         </div>
       </SheetContent>

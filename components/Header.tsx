@@ -1,10 +1,22 @@
+"use client";
+
 import Logo from "@/components/Logo";
 import MobileNavigation from "@/components/MobileNavigation";
 import Navigation from "@/components/Navigation";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
+  const pathname = usePathname();
+  const isHomeRoute = pathname === "/";
+
   return (
-    <header className="border-primary-900 border-b px-4 py-3 md:px-8 md:py-5">
+    <header
+      className={`border-b px-4 py-3 backdrop-blur-sm md:px-8 md:py-5 ${
+        isHomeRoute
+          ? "border-transparent bg-transparent"
+          : "bg-primary-950/95 border-primary-900"
+      }`}
+    >
       <div className="mx-auto flex max-w-7xl items-center justify-between">
         <Logo />
         <div className="z-10 hidden md:block">

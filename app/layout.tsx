@@ -31,11 +31,16 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <SessionProvider>
-          <Header />
-          <div className="grid flex-1 px-4 py-8 md:px-8 md:py-12">
-            <main className="mx-auto w-full max-w-7xl">
-              <ReservationProvider>{children}</ReservationProvider>
-            </main>
+          <div className="fixed top-0 right-0 left-0 z-50">
+            <Header />
+          </div>
+
+          <div className="flex-1 pt-16 md:pt-20">
+            <div className="grid flex-1 px-4 py-8 md:px-8 md:py-12">
+              <main className="mx-auto w-full max-w-7xl">
+                <ReservationProvider>{children}</ReservationProvider>
+              </main>
+            </div>
           </div>
         </SessionProvider>
       </body>

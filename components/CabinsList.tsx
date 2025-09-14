@@ -42,8 +42,6 @@ export default async function CabinsList({ filter }: FilterType) {
     );
   }
 
-  console.log(filter);
-
   if (filter === "all") {
     displayedCabins = cabins;
   }
