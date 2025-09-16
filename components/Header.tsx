@@ -4,6 +4,7 @@ import Logo from "@/components/Logo";
 import MobileNavigation from "@/components/MobileNavigation";
 import Navigation from "@/components/Navigation";
 import { usePathname } from "next/navigation";
+import SignOutButton from "./SignOutButton";
 
 export default function Header() {
   const pathname = usePathname();
@@ -22,7 +23,10 @@ export default function Header() {
         <div className="z-10 hidden md:block">
           <Navigation />
         </div>
-        <div className="z-10 block md:hidden">
+        <div className="z-10 flex items-center gap-2 md:hidden">
+          <div className="sm:hidden">
+            <SignOutButton />
+          </div>
           <MobileNavigation />
         </div>
       </div>
