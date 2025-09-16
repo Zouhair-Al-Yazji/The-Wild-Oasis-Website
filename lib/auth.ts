@@ -5,7 +5,7 @@ import { createGuest, getGuest } from "./data-service";
 const authConfig: NextAuthConfig = {
   providers: [Google],
   callbacks: {
-    authorized({ auth, request }) {
+    authorized({ auth }) {
       return !!auth?.user;
     },
     async signIn({ user }) {
