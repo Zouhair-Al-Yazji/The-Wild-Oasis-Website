@@ -41,7 +41,6 @@ export type DockItemProps = {
   onClick?: () => void;
 };
 
-// Updated prop types to include the additional props
 export type DockLabelProps = {
   className?: string;
   children: React.ReactNode;
@@ -56,7 +55,6 @@ export type DockIconProps = {
   isHovered?: MotionValue<number>;
 };
 
-// Add this type near the top with other types
 type DockChildProps = DockLabelProps | DockIconProps;
 
 export type DocContextType = {
@@ -183,7 +181,6 @@ function DockItem({ children, className, onClick }: DockItemProps) {
   );
 }
 
-// Updated to use the props directly instead of rest spread
 function DockLabel({ children, className, isHovered }: DockLabelProps) {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -206,7 +203,7 @@ function DockLabel({ children, className, isHovered }: DockLabelProps) {
           exit={{ opacity: 0, y: 0 }}
           transition={{ duration: 0.2 }}
           className={cn(
-            "absolute -top-6 left-1/2 w-fit rounded-md border px-2 py-0.5 text-xs whitespace-pre",
+            "border-primary-900 from-primary-900 to-primary-800 absolute -top-6 left-1/2 w-fit rounded-md border bg-gradient-to-br px-2 py-0.5 text-xs whitespace-pre",
             className,
           )}
           role="tooltip"
