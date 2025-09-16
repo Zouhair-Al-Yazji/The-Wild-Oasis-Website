@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Dock,
   DockIcon,
@@ -10,6 +12,7 @@ import {
   HomeIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
+import { usePathname } from "next/navigation";
 
 const navLinks = [
   {
@@ -30,12 +33,16 @@ const navLinks = [
 ];
 
 export default function MobileSideNavigation() {
+  const pathname = usePathname();
+
   return (
     <div>
       <Dock className="from-primary-700/95 to-primary-850 items-end bg-gradient-to-br pb-3 shadow-md backdrop-blur-md">
         {navLinks.map((navLink, idx) => (
           <Link href={navLink.href} key={idx}>
-            <DockItem className="from-primary-600/95 to-primary-850 aspect-square rounded-full bg-gradient-to-br">
+            <DockItem
+              className={`aspect-square rounded-full bg-gradient-to-br ${navLink.href === pathname ? "from-accent-600/95 to-accent-900" : "from-primary-600/95 to-primary-850"}`}
+            >
               <DockLabel>{navLink.title}</DockLabel>
               <DockIcon>{navLink.icon}</DockIcon>
             </DockItem>
