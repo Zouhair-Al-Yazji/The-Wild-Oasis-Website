@@ -1,9 +1,13 @@
 "use client";
 
 import { ArrowRightStartOnRectangleIcon } from "@heroicons/react/24/solid";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 export default function SignOutButton() {
+  const { data: session } = useSession();
+
+  if (!session?.user) return null;
+
   return (
     <button
       onClick={() => signOut({ redirectTo: "/" })}
