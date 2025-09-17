@@ -8,7 +8,7 @@
 
 ## 📖 Overview
 
-The **Wild Oasis Website** is the customer-facing platform of our boutique hotel with eight luxurious wooden cabins.
+The **Wild Oasis Website** is the customer-facing platform of our boutique hotel with luxurious wooden cabins.
 It allows guests to explore the hotel, browse cabins, and manage reservations, all connected in real-time with the internal **Wild Oasis Dashboard**.
 
 🔗 **Live Demo:** [the-wild-oasis-website-zouhair.vercel.app](https://the-wild-oasis-website-zouhair.vercel.app)
